@@ -1,6 +1,11 @@
 import React, {useRef, useState} from 'react';
 import {useRoute, useNavigation} from '@react-navigation/native';
-import {Button, Header} from '../../components';
+import {
+  Button,
+  Header,
+  ModalConfirmation,
+  ModalFeedback,
+} from '../../components';
 import {
   Container,
   ContainerInput,
@@ -15,7 +20,8 @@ import {useDispatch} from 'react-redux';
 import moment from 'moment';
 import Minus from '../../assets/icons/minus.svg';
 import Plus from '../../assets/icons/plus.svg';
-import { colors } from '../../theme/colors';
+import {colors} from '../../theme/colors';
+import {Alert} from 'react-native';
 
 export default function DetailsCounter() {
   const navigation = useNavigation();
@@ -25,16 +31,21 @@ export default function DetailsCounter() {
   const valueRef = useRef();
 
   const [title, setTitle] = useState(item ? item.title : '');
-  const [value, setValue] = useState(item ? item.value : 0);
+  const [value, setValue] = useState(item ? item.value : '');
+  const [modalDelete, setModalDelete] = useState(false);
+  const [modalFeedback, setModalFeedback] = useState(false);
 
   const gereneratorId = moment().format('x');
 
   const handleCreateCounter = () => {
+    if (!title || !value) {
+      return Alert.alert('Atenção!', 'Preencha todos os campos!');
+    }
+    setModalFeedback(true);
     dispatch({
       type: 'createCounter',
       payload: {id: gereneratorId, title: title, value: value},
     });
-    navigation.goBack();
   };
 
   const editCounter = action => {
@@ -61,8 +72,28 @@ export default function DetailsCounter() {
     } //navigation.goBack();
   };
 
+  const handleDeleteCounter = () => {
+    dispatch({
+      type: 'DELETE_COUNTER',
+      payload: {id: item.id},
+    });
+    setModalDelete(false);
+    navigation.goBack();
+  };
+
   return (
     <Container>
+      <ModalConfirmation
+        visible={modalDelete}
+        cancel={setModalDelete}
+        confirm={() => handleDeleteCounter()}
+        text="Confirma a exclusão desse contador?"
+      />
+      <ModalFeedback
+        visible={modalFeedback}
+        text="Criado com Sucesso!"
+        confirm={() => navigation.goBack()}
+      />
       <Header goBack={true} title={item?.id ? 'Editar' : 'Criar'} />
       {!item ? (
         <ContainerInput>
@@ -70,6 +101,7 @@ export default function DetailsCounter() {
             onChangeText={titleItem => setTitle(titleItem)}
             placeholder="Título para o contador"
             placeholderTextColor="#AAA"
+            returnKeyType="next"
             value={title}
             autoFocus={item ? false : true}
             onSubmitEditing={item ? null : () => valueRef.current.focus()}
@@ -87,10 +119,12 @@ export default function DetailsCounter() {
             placeholder="Número inicial"
             placeholderTextColor="#AAA"
             value={String(value)}
+            returnKeyType="done"
+            onEndEditing={handleCreateCounter}
           />
         </ContainerInputNumber>
       ) : null}
-      {!item ? <Button title={'salvar'} onPress={handleCreateCounter} /> : null}
+      {!item ? <Button title="Salvar" onPress={handleCreateCounter} /> : null}
       {item ? (
         <AreaButtons>
           <ButtonAlterValue onPress={() => editCounter('decrease')}>
@@ -100,6 +134,14 @@ export default function DetailsCounter() {
             <Plus width={40} fill={colors.white} />
           </ButtonAlterValue>
         </AreaButtons>
+      ) : null}
+      {item ? (
+        <Button
+          bgColor={colors.danger}
+          titleColor={colors.white}
+          title="Apagar contador"
+          onPress={() => setModalDelete(true)}
+        />
       ) : null}
     </Container>
   );

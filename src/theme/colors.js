@@ -4,7 +4,7 @@ export const colors = {
   primary: '#1380C3',
   secondary: '#F8A84F',
   font: '#343a40',
-  sucess: '#63C303',
+  success: '#63C303',
   danger: '#E35A5A',
 };
 

@@ -2,7 +2,7 @@ import React from 'react';
 import {Container, BackButton, Title} from './styles';
 import Back from '../../assets/icons/back.svg';
 import {useNavigation} from '@react-navigation/native';
-import { colors, shadows } from '../../theme/colors';
+import {colors, shadows} from '../../theme/colors';
 
 export default function Header({goBack, title}) {
   const navigation = useNavigation();

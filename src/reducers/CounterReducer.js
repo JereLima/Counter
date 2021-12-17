@@ -1,9 +1,11 @@
 const initialState = {
-  counters: [],
+  counters: [
+    {id: '1639768380535', title: 'Meu primeiro contador!', value: '5'},
+  ],
 };
 
 export default (state = initialState, action) => {
-  console.log('veeeem', action.payload);
+  console.log(state);
 
   let newList = [...state.counters];
   switch (action.type) {
@@ -24,6 +26,9 @@ export default (state = initialState, action) => {
           };
         }
       });
+      break;
+    case 'DELETE_COUNTER':
+      newList = newList.filter(item => item.id !== action.payload.id);
       break;
   }
   return {...state, counters: newList};
