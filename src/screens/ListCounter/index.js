@@ -1,9 +1,9 @@
 import React from 'react';
-import {Container, ButtonAdd, Empty} from './styles';
-import {CardCounter, Header} from '../../components';
-import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
-import {FlatList} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {FlatList, Platform} from 'react-native';
+import {Container, ButtonAdd, Empty} from './styles';
+import {CardCounter, Header, StatusBarIos} from '../../components';
 import Plus from '../../assets/icons/plus.svg';
 import {shadows} from '../../theme/colors';
 
@@ -13,6 +13,7 @@ export default function ListCounter() {
 
   return (
     <Container>
+      {Platform.OS === 'ios' ? <StatusBarIos /> : null}
       <Header title="Meus Contadores" />
       {!counters.length ? <Empty>Nenhum contador no momento...</Empty> : null}
       <FlatList

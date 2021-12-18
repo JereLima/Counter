@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button} from '../../components';
+import Button from '../../components/Button';
 import {colors} from '../../theme/colors';
 import {Container, Bg, Content, Text, AreaIcon, AreaButtons} from './styles';
 import Check from '../../assets/icons/check.svg';

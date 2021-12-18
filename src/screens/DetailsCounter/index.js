@@ -5,6 +5,7 @@ import {
   Header,
   ModalConfirmation,
   ModalFeedback,
+  StatusBarIos,
 } from '../../components';
 import {
   Container,
@@ -20,7 +21,7 @@ import {useDispatch} from 'react-redux';
 import moment from 'moment';
 import Minus from '../../assets/icons/minus.svg';
 import Plus from '../../assets/icons/plus.svg';
-import {colors} from '../../theme/colors';
+import {colors, shadows} from '../../theme/colors';
 import {Alert} from 'react-native';
 
 export default function DetailsCounter() {
@@ -83,11 +84,12 @@ export default function DetailsCounter() {
 
   return (
     <Container>
+      <StatusBarIos />
       <ModalConfirmation
         visible={modalDelete}
         cancel={setModalDelete}
         confirm={() => handleDeleteCounter()}
-        text="Confirma a exclusão desse contador?"
+        text={'Confirma a exclusão \ndesse contador?'}
       />
       <ModalFeedback
         visible={modalFeedback}
@@ -127,10 +129,14 @@ export default function DetailsCounter() {
       {!item ? <Button title="Salvar" onPress={handleCreateCounter} /> : null}
       {item ? (
         <AreaButtons>
-          <ButtonAlterValue onPress={() => editCounter('decrease')}>
+          <ButtonAlterValue
+            style={shadows.primary}
+            onPress={() => editCounter('decrease')}>
             <Minus width={40} fill={colors.white} />
           </ButtonAlterValue>
-          <ButtonAlterValue onPress={() => editCounter('increase')}>
+          <ButtonAlterValue
+            style={shadows.primary}
+            onPress={() => editCounter('increase')}>
             <Plus width={40} fill={colors.white} />
           </ButtonAlterValue>
         </AreaButtons>

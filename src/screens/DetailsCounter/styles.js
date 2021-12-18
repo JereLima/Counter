@@ -47,7 +47,7 @@ export const AreaButtons = styled.View`
   width: 50%;
   position: absolute;
   align-self: center;
-  bottom: 20px;
+  bottom: 50px;
   flex-direction: row;
   justify-content: space-around;
 `;

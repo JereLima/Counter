@@ -12,7 +12,7 @@ export const Bg = styled.View`
 
 export const Content = styled.View`
   width: 85%;
-  height: 70%;
+  padding-bottom: 20px;
   border-radius: 15px;
   background-color: ${colors.bg};
 `;

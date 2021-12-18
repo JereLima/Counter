@@ -2,7 +2,7 @@ import React from 'react';
 import {Container, BackButton, Title} from './styles';
 import Back from '../../assets/icons/back.svg';
 import {useNavigation} from '@react-navigation/native';
-import {colors, shadows} from '../../theme/colors';
+import {colors} from '../../theme/colors';
 
 export default function Header({goBack, title}) {
   const navigation = useNavigation();
@@ -10,7 +10,7 @@ export default function Header({goBack, title}) {
     navigation.goBack();
   };
   return (
-    <Container style={shadows.primary}>
+    <Container>
       {goBack ? (
         <BackButton onPress={() => handleGoBack()}>
           <Back height={40} fill={colors.white} />
