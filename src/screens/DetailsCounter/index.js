@@ -44,8 +44,8 @@ export default function DetailsCounter() {
     }
     setModalFeedback(true);
     dispatch({
-      type: 'createCounter',
-      payload: {id: gereneratorId, title: title, value: value},
+      type: 'CREATE_COUNTER',
+      payload: {counters: {id: gereneratorId, title: title, value: value}},
     });
   };
 

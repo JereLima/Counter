@@ -5,16 +5,11 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  console.log(state);
-
   let newList = [...state.counters];
   switch (action.type) {
-    case 'createCounter':
-      newList.push({
-        id: action.payload.id,
-        title: action.payload.title,
-        value: action.payload.value,
-      });
+    case 'CREATE_COUNTER':
+      newList.push(action.payload.counters);
+      return {...state, counters: newList};
       break;
     case 'EDIT_COUNTER':
       newList.map((item, index) => {
@@ -26,10 +21,12 @@ export default (state = initialState, action) => {
           };
         }
       });
+      return {...state, counters: newList};
       break;
     case 'DELETE_COUNTER':
       newList = newList.filter(item => item.id !== action.payload.id);
+      return {...state, newList};
       break;
   }
-  return {...state, counters: newList};
+  return state;
 };
