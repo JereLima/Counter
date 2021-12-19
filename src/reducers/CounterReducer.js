@@ -25,7 +25,7 @@ export default (state = initialState, action) => {
       break;
     case 'DELETE_COUNTER':
       newList = newList.filter(item => item.id !== action.payload.id);
-      return {...state, newList};
+      return {...state, counters: newList};
       break;
   }
   return state;
